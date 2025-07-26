@@ -1,16 +1,13 @@
-# pokemon_explorer
+Instructions
 
-A new Flutter project.
+Create a Pokémon Explorer App using the PokéAPI to fetch data about Pokémon from these 10 types: Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel, and Fairy.
 
-## Getting Started
+The app should allow users to:
 
-This project is a starting point for a Flutter application.
+Type Selection + Search: Users can choose a Pokémon type from the following options: 
 
-A few resources to get you started if this is your first Flutter project:
+Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel, and Fairy. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Additionally, users can search for Pokémon by name within the selected type.
+Display Pokémon: Display a list of Pokémon that belong to the selected type. The initial list should show only the first 10 Pokémon, with an option to load more Pokémon by fetching additional results from the API.
+Pokémon Details: Provide detailed information for each Pokémon, including its name, image, and it’s basic stats: HP, Attack and Defense.

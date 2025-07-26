@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +63,19 @@ flutter:
   assets:
     - assets/images/title.png
     - assets/images/pokeball.png
+    
+
+    - assets/images/icon_types/fire.svg
+    - assets/images/icon_types/ghost.svg
+    - assets/images/icon_types/grass.svg
+    - assets/images/icon_types/psychic.svg
+    - assets/images/icon_types/steel.svg
+    - assets/images/icon_types/water.svg
+    - assets/images/icon_types/dark.svg
+    - assets/images/icon_types/dragon.svg
+    - assets/images/icon_types/electric.svg
+    - assets/images/icon_types/fairy.svg
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -78,6 +92,9 @@ flutter:
     - family: NexaX
       fonts:
         - asset: assets/fonts/NexaXBold.ttf
+    - family: NexaRegular
+      fonts:
+        - asset: assets/fonts/nexa-regular.ttf
   
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
