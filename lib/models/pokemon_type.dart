@@ -6,6 +6,7 @@ class PokemonType {
 }
 
 const List<PokemonType> pokemonTypes = [
+  PokemonType(title: 'Any', icon: 'assets/images/icon_types/any.svg'),
   PokemonType(title: 'Fire', icon: 'assets/images/icon_types/fire.svg'),
   PokemonType(title: 'Ghost', icon: 'assets/images/icon_types/ghost.svg'),
   PokemonType(title: 'Grass', icon: 'assets/images/icon_types/grass.svg'),

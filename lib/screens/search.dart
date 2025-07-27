@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pokemon_explorer/models/pokemon_type.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -9,6 +10,13 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  late PokemonType _selectedType;
+  @override
+  void initState() {
+    super.initState();
+    _selectedType = pokemonTypes.first;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +48,37 @@ class _SearchScreenState extends State<SearchScreen> {
                 fontWeight: FontWeight.w400,
               ),
             ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1E1E1E),
+                borderRadius: BorderRadius.circular(7.r),
+              ),
+              child: DropdownButton<PokemonType>(
+                value: _selectedType,
+                isExpanded: true,
+                dropdownColor: Colors.black,
+                iconEnabledColor: Colors.white,
+                underline: const SizedBox(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'NexaRegular',
+                  fontSize: 16.sp,
+                ),
+                items: pokemonTypes.map((type) {
+                  return DropdownMenuItem(value: type, child: Text(type.title));
+                }).toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    print(value.icon);
+                    setState(() {
+                      _selectedType = value;
+                    });
+                  }
+                },
+              ),
+            ),
+
             SizedBox(height: 15.h),
             Text(
               'Enter Name',
@@ -53,9 +92,10 @@ class _SearchScreenState extends State<SearchScreen> {
             Spacer(),
             SizedBox(
               width: double.infinity,
+              height: 58.h,
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle search action
+                  print("MPIIII");
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

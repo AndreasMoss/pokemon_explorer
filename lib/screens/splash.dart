@@ -31,16 +31,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     if (_navigated) return;
     _navigated = true;
 
-    await _fadeController.forward();
-    if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return const SearchScreen(); // Navigate to the SearchScreen
-        },
-      ),
-    );
+    await _fadeController.forward(); // 👈 Θα αποκαλύψει την SearchScreen
   }
 
   @override
@@ -52,54 +43,65 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FadeTransition(
-        opacity: _fadeAnimation,
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: RadialGradient(
-              center: Alignment.center,
-              radius: 1.2,
-              colors: [
-                Color.fromARGB(255, 64, 47, 19), // Inner color
-                Color(0xFF000000), // Outer color
-              ],
+      body: Stack(
+        children: [
+          // 👇 Η SearchScreen υπάρχει ήδη κάτω
+          const SearchScreen(),
+          AnimatedBuilder(
+            animation: _fadeAnimation,
+            builder: (context, child) {
+              return IgnorePointer(
+                ignoring: _fadeAnimation.value == 0.0,
+                child: FadeTransition(opacity: _fadeAnimation, child: child),
+              );
+            },
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.center,
+                  radius: 1.2,
+                  colors: [Color.fromARGB(255, 64, 47, 19), Color(0xFF000000)],
+                ),
+              ),
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Spacer(),
+                  Text(
+                    'Welcome to',
+                    style: TextStyle(
+                      fontFamily: 'NexaX',
+                      color: Colors.white,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  Image.asset(
+                    'assets/images/title.png',
+                    width: 267.14.w,
+                    height: 177.94.h,
+                  ),
+                  SizedBox(height: 320.h),
+                  SwipeBallIndicator(onTap: _handleStart),
+                  SizedBox(height: 20.h),
+                  Text(
+                    'Tap the ball to Start Exploring!',
+                    style: TextStyle(
+                      fontFamily: 'NexaX',
+                      color: Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  SizedBox(height: 40.h),
+                ],
+              ),
             ),
           ),
-          width: double.infinity,
-          child: Column(
-            children: [
-              Spacer(),
-              Text(
-                'Welcome to',
-                style: TextStyle(
-                  fontFamily: 'NexaX',
-                  color: Colors.white,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(height: 10.h),
-              Image.asset(
-                'assets/images/title.png',
-                width: 267.14.w,
-                height: 177.94.h,
-              ),
-              SizedBox(height: 320.h),
-              SwipeBallIndicator(onTap: _handleStart),
-              SizedBox(height: 20.h),
-              Text(
-                'Tap the ball to Start Exploring!',
-                style: TextStyle(
-                  fontFamily: 'NexaX',
-                  color: Colors.white,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              SizedBox(height: 40.h),
-            ],
-          ),
-        ),
+
+          // 👆 Η Splash πάνω με fade
+        ],
       ),
     );
   }
