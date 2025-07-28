@@ -45,7 +45,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: Stack(
         children: [
-          // 👇 Η SearchScreen υπάρχει ήδη κάτω
+          //  Η SearchScreen υπάρχει ήδη κάτω
           const SearchScreen(),
           AnimatedBuilder(
             animation: _fadeAnimation,
@@ -99,8 +99,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-
-          // 👆 Η Splash πάνω με fade
         ],
       ),
     );
