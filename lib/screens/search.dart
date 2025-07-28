@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokemon_explorer/models/pokemon_type.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -11,10 +12,19 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late PokemonType _selectedType;
+  final TextEditingController _nameController = TextEditingController();
+  String _searchName = '';
+
   @override
   void initState() {
     super.initState();
     _selectedType = pokemonTypes.first;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,7 +76,25 @@ class _SearchScreenState extends State<SearchScreen> {
                   fontSize: 16.sp,
                 ),
                 items: pokemonTypes.map((type) {
-                  return DropdownMenuItem(value: type, child: Text(type.title));
+                  return DropdownMenuItem(
+                    value: type,
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          type.icon,
+                          width: 24.w,
+                          height: 24.h,
+
+                          // colorFilter: const ColorFilter.mode(
+                          //   Colors.red,
+                          //   BlendMode.srcIn,
+                          // ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Text(type.title),
+                      ],
+                    ),
+                  );
                 }).toList(),
                 onChanged: (value) {
                   if (value != null) {
@@ -89,6 +117,45 @@ class _SearchScreenState extends State<SearchScreen> {
                 fontWeight: FontWeight.w400,
               ),
             ),
+            SizedBox(height: 10.h),
+            TextField(
+              controller: _nameController,
+              onChanged: (value) {
+                setState(() {
+                  _searchName = value;
+                });
+              },
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'NexaRegular',
+                fontSize: 16.sp,
+              ),
+              cursorColor: Colors.white,
+              decoration: InputDecoration(
+                hintText: 'eg. Charizard',
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontFamily: 'NexaRegular',
+                  fontSize: 15.sp,
+                ),
+                filled: true,
+                fillColor: const Color(0xFF1E1E1E),
+                suffixIcon: Icon(Icons.search, color: Colors.white),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 20.h,
+                  horizontal: 12.w,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(7.r),
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(7.r),
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+              ),
+            ),
+
             Spacer(),
             SizedBox(
               width: double.infinity,
