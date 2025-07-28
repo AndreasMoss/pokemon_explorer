@@ -37,6 +37,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.2.0
   dropdown_button2: ^2.3.9
+  http: ^1.4.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pokemon_explorer/api/poke_api_service.dart';
 import 'package:pokemon_explorer/models/pokemon_type.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -29,6 +30,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final PokeApiService apiService = PokeApiService();
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -161,9 +164,43 @@ class _SearchScreenState extends State<SearchScreen> {
               width: double.infinity,
               height: 58.h,
               child: ElevatedButton(
-                onPressed: () {
-                  print("MPIIII");
+                onPressed: () async {
+                  final selectedType = _selectedType;
+                  final search = _searchName.trim().toLowerCase();
+
+                  try {
+                    // 1. Φέρνεις όλα τα ονόματα του τύπου
+                    final names = await apiService.getPokemonNamesByType(
+                      selectedType,
+                    );
+
+                    print('Total names: ${names.length}');
+                    print('First 10: ${names.take(10).toList()}');
+
+                    // 2. Αν έχει search text, κάνε φιλτράρισμα
+                    final filtered = search.isEmpty
+                        ? names
+                        : names
+                              .where((name) => name.startsWith(search))
+                              .toList();
+
+                    print('Filtered: ${filtered.length}\n');
+
+                    // 3. Πάρε τα πρώτα 10 PokémonBasic
+                    final first10 = filtered.take(10).toList();
+
+                    final pokemons = await Future.wait(
+                      first10.map((name) => apiService.getPokemonBasic(name)),
+                    );
+
+                    for (var p in pokemons) {
+                      print('${p.name} → ${p.imageUrl}');
+                    }
+                  } catch (e) {
+                    print('ERROR: $e');
+                  }
                 },
+
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(7.r),
