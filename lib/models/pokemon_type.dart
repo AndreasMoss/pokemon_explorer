@@ -18,3 +18,11 @@ const List<PokemonType> pokemonTypes = [
   PokemonType(title: 'Electric', icon: 'assets/images/icon_types/electric.svg'),
   PokemonType(title: 'Fairy', icon: 'assets/images/icon_types/fairy.svg'),
 ];
+
+PokemonType getPokemonTypeByTitle(String title) {
+  return pokemonTypes.firstWhere(
+    (type) => type.title.toLowerCase() == title.toLowerCase(),
+    orElse: () =>
+        PokemonType(title: 'Any', icon: 'assets/images/icon_types/any.svg'),
+  );
+}
