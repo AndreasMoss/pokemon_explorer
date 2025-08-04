@@ -1,4 +1,12 @@
-String capitalize(String input) {
+String pokemonNameFormatter(String input) {
   if (input.isEmpty) return input;
-  return input[0].toUpperCase() + input.substring(1);
+
+  return input
+      .split('-')
+      .map((word) => word[0].toUpperCase() + word.substring(1))
+      .join(' ');
 }
+
+/// xwrizei sto "-"
+/// kanei capitalize
+/// enwnei me keno " "

@@ -6,9 +6,10 @@ import 'package:pokemon_explorer/screens/is_loading.dart';
 import 'package:pokemon_explorer/widgets/pokemon_card.dart';
 
 class Select extends StatefulWidget {
-  const Select({super.key, required this.selectedType});
+  const Select({super.key, required this.selectedType, required this.test});
 
   final PokemonType selectedType;
+  final String test;
 
   @override
   State<Select> createState() => _SelectState();
@@ -52,6 +53,7 @@ class _SelectState extends State<Select> {
 
   @override
   Widget build(BuildContext context) {
+    //print("The selected type is: ${widget.test}");
     // const List<Map<String, dynamic>> pokemons = [
     //   {
     //     'name': 'Bulbasaur',
@@ -134,99 +136,81 @@ class _SelectState extends State<Select> {
               foregroundColor: Colors.white,
               backgroundColor: Color(0xFF000000),
             ),
-            body: Stack(
-              children: [
-                Positioned(
-                  top: 90.h,
-                  left: -55.w,
-                  child: Opacity(
-                    opacity: 0.5, // κάνε το πιο διακριτικό
-                    child: Image.asset(
-                      'assets/images/ball_background.png',
-                      width: 405.w,
-                      height: 405.h,
+            body: Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Select your ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'NexaRegular',
+                        color: Colors.white,
+                        fontSize: 28,
+                      ),
                     ),
-                  ),
-                ),
-
-                // 🔹 Όλο το περιεχόμενο της σελίδας
-                SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
                         Text(
-                          'Select your ',
+                          'Pokémon',
                           style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'NexaRegular',
                             color: Colors.white,
-                            fontSize: 28,
+                            fontSize: 42,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'NexaX',
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              'Pokémon',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 42,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'NexaX',
-                              ),
-                            ),
-                            SizedBox(width: 7.w),
-                            Image.asset(
-                              'assets/images/pokeball.png',
-                              width: 27.w,
-                              height: 27.h,
-                            ),
-                          ],
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: rowCount,
-                            itemBuilder: (context, index) {
-                              final firstIndex = index * 2;
-                              final secondIndex = firstIndex + 1;
-
-                              final first = pokemons[firstIndex];
-                              final second = secondIndex < pokemons.length
-                                  ? pokemons[secondIndex]
-                                  : null;
-
-                              return Row(
-                                children: [
-                                  Expanded(
-                                    child: PokemonCard(
-                                      name: first['name'],
-                                      imageUrl: first['image'],
-                                      type: first['type'],
-                                      typeColor: first['color'],
-                                    ),
-                                  ),
-                                  //SizedBox(width: 3.w),
-                                  Expanded(
-                                    child: second != null
-                                        ? PokemonCard(
-                                            name: second['name'],
-                                            imageUrl: second['image'],
-                                            type: second['type'],
-                                            typeColor: second['color'],
-                                          )
-                                        : const SizedBox(), // κενή θέση αν μονός αριθμός
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
+                        SizedBox(width: 7.w),
+                        Image.asset(
+                          'assets/images/pokeball.png',
+                          width: 27.w,
+                          height: 27.h,
                         ),
                       ],
                     ),
-                  ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: rowCount,
+                        itemBuilder: (context, index) {
+                          final firstIndex = index * 2;
+                          final secondIndex = firstIndex + 1;
+
+                          final first = pokemons[firstIndex];
+                          final second = secondIndex < pokemons.length
+                              ? pokemons[secondIndex]
+                              : null;
+
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: PokemonCard(
+                                  name: first['name'],
+                                  imageUrl: first['image'],
+                                  type: first['type'],
+                                  typeColor: first['color'],
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              Expanded(
+                                child: second != null
+                                    ? PokemonCard(
+                                        name: second['name'],
+                                        imageUrl: second['image'],
+                                        type: second['type'],
+                                        typeColor: second['color'],
+                                      )
+                                    : const SizedBox(), // κενή θέση αν μονός αριθμός
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
   }

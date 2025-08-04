@@ -32,6 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final PokeApiService apiService = PokeApiService();
+    //print("The entered name is: $_searchName");
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -169,7 +170,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Select(selectedType: _selectedType),
+                      builder: (context) => Select(
+                        selectedType: _selectedType,
+                        test: _searchName,
+                      ),
                     ),
                   );
                 },
