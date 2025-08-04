@@ -168,7 +168,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Select()),
+                    MaterialPageRoute(
+                      builder: (context) => Select(selectedType: _selectedType),
+                    ),
                   );
                 },
 

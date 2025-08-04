@@ -6,7 +6,9 @@ import 'package:pokemon_explorer/screens/is_loading.dart';
 import 'package:pokemon_explorer/widgets/pokemon_card.dart';
 
 class Select extends StatefulWidget {
-  const Select({super.key});
+  const Select({super.key, required this.selectedType});
+
+  final PokemonType selectedType;
 
   @override
   State<Select> createState() => _SelectState();
@@ -25,9 +27,7 @@ class _SelectState extends State<Select> {
 
   Future<void> fetchFirePokemons() async {
     try {
-      final names = await pokeApi.getPokemonNamesByType(
-        getPokemonTypeByTitle('Fire'),
-      );
+      final names = await pokeApi.getPokemonNamesByType(widget.selectedType);
 
       final basicList = await Future.wait(
         names.map((name) async {
@@ -35,8 +35,8 @@ class _SelectState extends State<Select> {
           return {
             'name': basic.name,
             'image': basic.imageUrl,
-            'type': 'Fire',
-            'color': const Color(0xFFFFA07A),
+            'type': widget.selectedType.title,
+            'color': widget.selectedType.color,
           };
         }),
       );
