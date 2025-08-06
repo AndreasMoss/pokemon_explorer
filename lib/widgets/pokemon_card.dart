@@ -23,7 +23,8 @@ class PokemonCard extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PokemonDetail(pokemonName: name),
+          builder: (context) =>
+              PokemonDetail(pokemonName: name, tColor: typeColor),
         ),
       ),
       child: Card(
