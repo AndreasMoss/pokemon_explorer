@@ -54,12 +54,39 @@ class PokeApiService {
 
   // detailed pokemon call
   Future<PokemonDetail> getPokemonDetail(String name) async {
-    // 1. Basic Pokémon info
+    Map<String, dynamic> data;
+
+    // Try fetching from /pokemon/
     final response = await http.get(Uri.parse('$baseUrl/pokemon/$name'));
-    if (response.statusCode != 200) throw Exception('Failed to load Pokémon');
 
-    final data = json.decode(response.body);
+    if (response.statusCode == 200) {
+      data = json.decode(response.body);
+    } else {
+      // Try /pokemon-form/
+      final formResponse = await http.get(
+        Uri.parse('$baseUrl/pokemon-form/$name'),
+      );
 
+      if (formResponse.statusCode == 200) {
+        final formData = json.decode(formResponse.body);
+
+        // Fallback: use image from form, rest dummy
+        final imageUrl = formData['sprites']['front_default'] ?? '';
+        return PokemonDetail(
+          name: name,
+          imageUrl: imageUrl,
+          type: 'unknown',
+          hp: 0,
+          attack: 0,
+          defense: 0,
+          description: 'Details not available for this form.',
+        );
+      } else {
+        throw Exception('Failed to load Pokémon or form data for $name');
+      }
+    }
+
+    // If we reached here, we have the /pokemon/ data
     final imageUrl =
         data['sprites']['other']['official-artwork']['front_default'] ?? '';
     final type = data['types'][0]['type']['name'];
@@ -78,23 +105,26 @@ class PokeApiService {
     final attack = getStat('attack');
     final defense = getStat('defense');
 
-    // 2. Description (from species)
+    // Get species info for description
     final speciesRes = await http.get(
       Uri.parse('$baseUrl/pokemon-species/$name'),
     );
-    if (speciesRes.statusCode != 200) throw Exception('Failed to load species');
 
-    final speciesData = json.decode(speciesRes.body);
+    String description = 'This is a special form of a Pokémon.';
 
-    final flavorTextEntry = (speciesData['flavor_text_entries'] as List)
-        .firstWhere(
-          (entry) => entry['language']['name'] == 'en',
-          orElse: () => {'flavor_text': 'No description available.'},
-        );
+    if (speciesRes.statusCode == 200) {
+      final speciesData = json.decode(speciesRes.body);
 
-    final description = (flavorTextEntry['flavor_text'] as String)
-        .replaceAll('\n', ' ')
-        .replaceAll('\f', ' ');
+      final flavorTextEntry = (speciesData['flavor_text_entries'] as List)
+          .firstWhere(
+            (entry) => entry['language']['name'] == 'en',
+            orElse: () => {'flavor_text': 'No description available.'},
+          );
+
+      description = (flavorTextEntry['flavor_text'] as String)
+          .replaceAll('\n', ' ')
+          .replaceAll('\f', ' ');
+    }
 
     return PokemonDetail(
       name: name,

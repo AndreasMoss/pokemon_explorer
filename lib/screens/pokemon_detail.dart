@@ -5,7 +5,12 @@ import 'package:pokemon_explorer/functions/general.dart';
 import 'package:pokemon_explorer/widgets/stat_item.dart';
 import 'package:pokemon_explorer/widgets/char_tag.dart';
 
-/// NA FTIAXW TO THEMA ME TO OTI DE FORTWNEI TA POKEMON ME MEGALITERA ONOMATA LOGW FORMAT
+/// NA FTIAXW TO THEMA ME TO OTI DE FORTWNEI TA POKEMON ME MEGALITERA ONOMATA LOGW FORMAT (check)
+/// NA FTIAXW TO OTI EMFANIZEI KAI SECONDARY TYPE SE AUTA POY KANW SEARCH
+/// NA KANW TO API NA EMFANIZEI TA 10 PRWTA
+/// NA ILOPOIISW TO SEARCH BY NAME
+///
+/// othoni gia failed to fetch details
 
 class PokemonDetail extends StatelessWidget {
   const PokemonDetail({
@@ -20,6 +25,7 @@ class PokemonDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pokeApi = PokeApiService();
+    print('Fetching details for: $pokemonName');
 
     return Scaffold(
       body: Container(
@@ -58,6 +64,7 @@ class PokemonDetail extends StatelessWidget {
               FutureBuilder(
                 future: pokeApi.getPokemonDetail(pokemonName),
                 builder: (context, asyncSnapshot) {
+                  print('fetching details for: $pokemonName');
                   if (asyncSnapshot.connectionState ==
                       ConnectionState.waiting) {
                     return Expanded(
@@ -67,7 +74,15 @@ class PokemonDetail extends StatelessWidget {
                     );
                   }
                   if (asyncSnapshot.hasError) {
-                    return Center(child: Text('Error: ${asyncSnapshot.error}'));
+                    return Text(
+                      'Error: ${asyncSnapshot.error}',
+                      style: TextStyle(
+                        fontFamily: 'NexaX',
+                        fontSize: 32.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                      ),
+                    );
                   }
 
                   final pDetails = asyncSnapshot.data!;
