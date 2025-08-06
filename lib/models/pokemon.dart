@@ -8,7 +8,7 @@ class PokemonBasic {
 class PokemonDetail {
   final String name;
   final String imageUrl;
-  final String type;
+  final List<String> types;
   final int hp;
   final int attack;
   final int defense;
@@ -17,7 +17,7 @@ class PokemonDetail {
   PokemonDetail({
     required this.name,
     required this.imageUrl,
-    required this.type,
+    required this.types,
     required this.hp,
     required this.attack,
     required this.defense,

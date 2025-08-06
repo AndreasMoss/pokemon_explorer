@@ -6,7 +6,6 @@ import 'package:pokemon_explorer/widgets/stat_item.dart';
 import 'package:pokemon_explorer/widgets/char_tag.dart';
 
 /// NA FTIAXW TO THEMA ME TO OTI DE FORTWNEI TA POKEMON ME MEGALITERA ONOMATA LOGW FORMAT (check)
-/// NA FTIAXW TO OTI EMFANIZEI KAI SECONDARY TYPE SE AUTA POY KANW SEARCH
 /// NA KANW TO API NA EMFANIZEI TA 10 PRWTA
 /// NA ILOPOIISW TO SEARCH BY NAME
 ///
@@ -25,7 +24,7 @@ class PokemonDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pokeApi = PokeApiService();
-    print('Fetching details for: $pokemonName');
+    // print('Fetching details for: $pokemonName');
 
     return Scaffold(
       body: Container(
@@ -64,7 +63,7 @@ class PokemonDetail extends StatelessWidget {
               FutureBuilder(
                 future: pokeApi.getPokemonDetail(pokemonName),
                 builder: (context, asyncSnapshot) {
-                  print('fetching details for: $pokemonName');
+                  //print('fetching details for: $pokemonName');
                   if (asyncSnapshot.connectionState ==
                       ConnectionState.waiting) {
                     return Expanded(
@@ -94,6 +93,7 @@ class PokemonDetail extends StatelessWidget {
 
                       // Name + Type
                       Text(
+                        textAlign: TextAlign.center,
                         pokemonNameFormatter(pDetails.name),
                         style: TextStyle(
                           fontFamily: 'NexaX',
@@ -102,32 +102,33 @@ class PokemonDetail extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 2.h),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CharTag(label: pDetails.type, color: tColor),
-                          // Container(
-                          //   padding: EdgeInsets.symmetric(
-                          //     vertical: 6.h,
-                          //     horizontal: 12.w,
-                          //   ),
-                          //   decoration: BoxDecoration(
-                          //     color: tColor,
-                          //     borderRadius: BorderRadius.circular(20.r),
-                          //   ),
-                          //   child: Text(
-                          //     pDetails.type.toUpperCase(),
-                          //     style: TextStyle(
-                          //       color: Colors.white,
-                          //       fontSize: 14.sp,
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
 
-                      SizedBox(height: 50.h),
+                      // SizedBox(height: 2.h),
+                      // Row(
+                      //   mainAxisSize: MainAxisSize.min,
+                      //   children: [
+
+                      // CharTag(label: pDetails.type, color: tColor),
+                      // Container(
+                      //   padding: EdgeInsets.symmetric(
+                      //     vertical: 6.h,
+                      //     horizontal: 12.w,
+                      //   ),
+                      //   decoration: BoxDecoration(
+                      //     color: tColor,
+                      //     borderRadius: BorderRadius.circular(20.r),
+                      //   ),
+                      //   child: Text(
+                      //     pDetails.type.toUpperCase(),
+                      //     style: TextStyle(
+                      //       color: Colors.white,
+                      //       fontSize: 14.sp,
+                      //     ),
+                      //   ),
+                      // ),
+                      //   ],
+                      // ),
+                      SizedBox(height: 40.h),
 
                       // Image
                       Image.network(
@@ -157,7 +158,7 @@ class PokemonDetail extends StatelessWidget {
                         ),
                       ),
 
-                      SizedBox(height: 24.h),
+                      SizedBox(height: 30.h),
 
                       // Description
                       Padding(

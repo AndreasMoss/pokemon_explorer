@@ -75,7 +75,7 @@ class PokeApiService {
         return PokemonDetail(
           name: name,
           imageUrl: imageUrl,
-          type: 'unknown',
+          types: ['unknown'], // Τώρα είναι λίστα
           hp: 0,
           attack: 0,
           defense: 0,
@@ -89,7 +89,11 @@ class PokeApiService {
     // If we reached here, we have the /pokemon/ data
     final imageUrl =
         data['sprites']['other']['official-artwork']['front_default'] ?? '';
-    final type = data['types'][0]['type']['name'];
+
+    // Παίρνουμε όλους τους types
+    final types = (data['types'] as List)
+        .map((t) => t['type']['name'] as String)
+        .toList();
 
     final stats = data['stats'] as List;
 
@@ -129,7 +133,7 @@ class PokeApiService {
     return PokemonDetail(
       name: name,
       imageUrl: imageUrl,
-      type: type,
+      types: types, // Βάζουμε όλη τη λίστα των types
       hp: hp,
       attack: attack,
       defense: defense,
