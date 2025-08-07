@@ -138,27 +138,18 @@ class _SelectState extends State<Select> {
                             // Είμαστε στο τελευταίο index → δείξε το κουμπί
                             return Center(
                               child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7.r),
-                                  ),
-                                  backgroundColor: widget.selectedType.color,
-                                  // padding: EdgeInsets.symmetric(
-                                  //   vertical: 16.h,
-                                  //   horizontal: 25.w,
-                                  // ),
-                                ),
                                 onPressed: loadNextBatch,
-                                child: Icon(Icons.add, color: Colors.white),
-                                // child: Text(
-                                //   '+',
-                                //   style: TextStyle(
-                                //     fontFamily: 'NexaX',
-                                //     color: Colors.white,
-                                //     fontSize: 14.sp,
-                                //     fontWeight: FontWeight.w400,
-                                //   ),
-                                // ),
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                  padding: EdgeInsets.all(14.w),
+                                  backgroundColor: widget.selectedType.color,
+                                  elevation: 4,
+                                ),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                  size: 22,
+                                ),
                               ),
                             );
                           }

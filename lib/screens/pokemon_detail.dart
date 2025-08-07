@@ -5,7 +5,7 @@ import 'package:pokemon_explorer/functions/general.dart';
 import 'package:pokemon_explorer/widgets/stat_item.dart';
 
 /// NA FTIAXW TO THEMA ME TO OTI DE FORTWNEI TA POKEMON ME MEGALITERA ONOMATA LOGW FORMAT (check)
-/// NA KANW TO API NA EMFANIZEI TA 10 PRWTA
+/// NA KANW TO API NA EMFANIZEI TA 10 PRWTA (check)
 /// NA ILOPOIISW TO SEARCH BY NAME
 ///
 /// othoni gia failed to fetch details

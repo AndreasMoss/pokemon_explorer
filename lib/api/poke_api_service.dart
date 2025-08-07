@@ -45,7 +45,12 @@ class PokeApiService {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final imageUrl =
-          data['sprites']['other']['official-artwork']['front_default'];
+          data['sprites']['other']['official-artwork']['front_default'] ??
+          data['sprites']['other']['official-artwork']['front_shiny'] ??
+          data['sprites']['other']['home']?['front_default'] ??
+          data['sprites']['other']['dream_world']?['front_default'] ??
+          data['sprites']['other']['showdown']?['front_default'] ??
+          data['sprites']['other']['showdown']?['back_default'];
       return PokemonBasic(name: name, imageUrl: imageUrl ?? '');
     } else {
       throw Exception('Failed to fetch Pokémon details for $name');
@@ -58,6 +63,8 @@ class PokeApiService {
 
     // Try fetching from /pokemon/
     final response = await http.get(Uri.parse('$baseUrl/pokemon/$name'));
+
+    print('api call: $baseUrl/pokemon/$name');
 
     if (response.statusCode == 200) {
       data = json.decode(response.body);
@@ -88,7 +95,13 @@ class PokeApiService {
 
     // If we reached here, we have the /pokemon/ data
     final imageUrl =
-        data['sprites']['other']['official-artwork']['front_default'] ?? '';
+        data['sprites']['other']['official-artwork']['front_default'] ??
+        data['sprites']['other']['official-artwork']['front_shiny'] ??
+        data['sprites']['other']['home']?['front_default'] ??
+        data['sprites']['other']['dream_world']?['front_default'] ??
+        data['sprites']['other']['showdown']?['front_default'] ??
+        data['sprites']['other']['showdown']?['back_default'];
+    data['sprites']['front_default'] ?? print('imageurl ISSSS: $imageUrl');
 
     // Παίρνουμε όλους τους types
     final types = (data['types'] as List)
@@ -114,7 +127,7 @@ class PokeApiService {
       Uri.parse('$baseUrl/pokemon-species/$name'),
     );
 
-    String description = 'This is a special form of a Pokémon.';
+    String description = 'This is a special form of the basic Pokémon.';
 
     if (speciesRes.statusCode == 200) {
       final speciesData = json.decode(speciesRes.body);
