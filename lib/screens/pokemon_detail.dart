@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemon_explorer/api/poke_api_service.dart';
 import 'package:pokemon_explorer/functions/general.dart';
 import 'package:pokemon_explorer/widgets/stat_item.dart';
-import 'package:pokemon_explorer/widgets/char_tag.dart';
 
 /// NA FTIAXW TO THEMA ME TO OTI DE FORTWNEI TA POKEMON ME MEGALITERA ONOMATA LOGW FORMAT (check)
 /// NA KANW TO API NA EMFANIZEI TA 10 PRWTA

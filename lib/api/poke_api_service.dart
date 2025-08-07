@@ -10,18 +10,18 @@ class PokeApiService {
   Future<List<String>> getPokemonNamesByType(PokemonType type) async {
     final typeName = type.title.toLowerCase();
 
-    if (typeName == 'any') {
-      final url = Uri.parse('$baseUrl/pokemon?limit=100');
-      final response = await http.get(url);
+    // if (typeName == 'any') {
+    //   final url = Uri.parse('$baseUrl/pokemon?limit=100');
+    //   final response = await http.get(url);
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final results = data['results'] as List;
-        return results.map((e) => e['name'] as String).toList();
-      } else {
-        throw Exception('Failed to fetch Pokémon list');
-      }
-    }
+    //   if (response.statusCode == 200) {
+    //     final data = json.decode(response.body);
+    //     final results = data['results'] as List;
+    //     return results.map((e) => e['name'] as String).toList();
+    //   } else {
+    //     throw Exception('Failed to fetch Pokémon list');
+    //   }
+    // }
 
     final url = Uri.parse('$baseUrl/type/$typeName');
     final response = await http.get(url);
