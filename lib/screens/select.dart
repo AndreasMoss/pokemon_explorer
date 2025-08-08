@@ -7,10 +7,9 @@ import 'package:pokemon_explorer/screens/is_loading.dart';
 import 'package:pokemon_explorer/widgets/pokemon_card.dart';
 
 class Select extends StatefulWidget {
-  const Select({super.key, required this.selectedType, required this.test});
+  const Select({super.key, required this.selectedType});
 
   final PokemonType selectedType;
-  final String test;
 
   @override
   State<Select> createState() => _SelectState();
@@ -57,31 +56,6 @@ class _SelectState extends State<Select> {
     });
   }
 
-  // Future<void> fetchSelectedTypePokemons() async {
-  //   try {
-  //     final names = await pokeApi.getPokemonNamesByType(widget.selectedType);
-
-  //     final basicList = await Future.wait(
-  //       names.map((name) async {
-  //         final basic = await pokeApi.getPokemonBasic(name);
-  //         return {
-  //           'name': basic.name,
-  //           'image': basic.imageUrl,
-  //           'type': widget.selectedType.title,
-  //           'color': widget.selectedType.color,
-  //         };
-  //       }),
-  //     );
-
-  //     setState(() {
-  //       pokemons = basicList;
-  //       isLoading = false;
-  //     });
-  //   } catch (e) {
-  //     print('Error fetching fire pokemons: $e');
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     final int rowCount = (pokemons.length / 2).ceil();
@@ -92,16 +66,31 @@ class _SelectState extends State<Select> {
         ? IsLoadingScreen()
         : Scaffold(
             backgroundColor: Colors.black,
-            appBar: AppBar(
-              foregroundColor: Colors.white,
-              backgroundColor: Color(0xFF000000),
-            ),
+
             body: Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.only(
+                bottom: 25.0,
+                left: 25.0,
+                right: 25.0,
+                top: 10.0,
+              ),
               child: SafeArea(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                            size: 23.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 28.h),
                     Text(
                       'Select your ',
                       style: TextStyle(

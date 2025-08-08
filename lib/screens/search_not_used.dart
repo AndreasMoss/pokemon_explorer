@@ -170,10 +170,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Select(
-                        selectedType: _selectedType,
-                        test: _searchName,
-                      ),
+                      builder: (context) => Select(selectedType: _selectedType),
                     ),
                   );
                 },
