@@ -36,10 +36,9 @@ class _SearchScreenState extends State<SearchScreenV2> {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            // SizedBox(height: 5.h),
             Expanded(
               child: ListView.builder(
-                itemCount: (pokemonTypes.length / 2).ceil(), // πόσες σειρές
+                itemCount: (pokemonTypes.length / 2).ceil(), // seires
                 itemBuilder: (context, rowIndex) {
                   final firstIndex = rowIndex * 2;
                   final secondIndex = firstIndex + 1;

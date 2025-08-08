@@ -67,6 +67,7 @@ flutter:
     - assets/images/pokeball.png
     - assets/images/ball_background.png
     - assets/images/searching.png
+    - assets/images/sad_pikachu.png
 
     
     - assets/images/icon_types/any.svg

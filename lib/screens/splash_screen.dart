@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pokemon_explorer/screens/search_not_used.dart';
 import 'package:pokemon_explorer/screens/search_v2_screen.dart';
 import 'package:pokemon_explorer/widgets/swipe_ball_indicator.dart';
 
@@ -32,7 +31,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     if (_navigated) return;
     _navigated = true;
 
-    await _fadeController.forward(); // 👈 Θα αποκαλύψει την SearchScreen
+    await _fadeController.forward(); // Tha apokalipsei tin SearchScreen
   }
 
   @override
@@ -46,7 +45,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: Stack(
         children: [
-          //  Η SearchScreen υπάρχει ήδη κάτω
           const SearchScreenV2(),
           AnimatedBuilder(
             animation: _fadeAnimation,

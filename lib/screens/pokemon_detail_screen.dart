@@ -4,12 +4,6 @@ import 'package:pokemon_explorer/api/poke_api_service.dart';
 import 'package:pokemon_explorer/functions/general.dart';
 import 'package:pokemon_explorer/widgets/stat_item.dart';
 
-/// NA FTIAXW TO THEMA ME TO OTI DE FORTWNEI TA POKEMON ME MEGALITERA ONOMATA LOGW FORMAT (check)
-/// NA KANW TO API NA EMFANIZEI TA 10 PRWTA (check)
-/// NA ILOPOIISW TO SEARCH BY NAME
-///
-/// othoni gia failed to fetch details
-
 class PokemonDetailScreen extends StatelessWidget {
   const PokemonDetailScreen({
     super.key,
@@ -46,13 +40,12 @@ class PokemonDetailScreen extends StatelessWidget {
 
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFF373737),
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       width: 42.w,
                       height: 42.h,
                       child: Center(
-                        child: Icon(Icons.arrow_back, color: Colors.white),
+                        child: Icon(Icons.arrow_back_ios, color: Colors.white),
                       ),
                     ),
                   ),
@@ -72,13 +65,19 @@ class PokemonDetailScreen extends StatelessWidget {
                     );
                   }
                   if (asyncSnapshot.hasError) {
-                    return Text(
-                      'Error: ${asyncSnapshot.error}',
-                      style: TextStyle(
-                        fontFamily: 'NexaX',
-                        fontSize: 32.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
+                    return Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Text(
+                          'Server is not responding.\nTry again later.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'NexaX',
+                            fontSize: 32.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     );
                   }
@@ -102,34 +101,8 @@ class PokemonDetailScreen extends StatelessWidget {
                         ),
                       ),
 
-                      // SizedBox(height: 2.h),
-                      // Row(
-                      //   mainAxisSize: MainAxisSize.min,
-                      //   children: [
-
-                      // CharTag(label: pDetails.type, color: tColor),
-                      // Container(
-                      //   padding: EdgeInsets.symmetric(
-                      //     vertical: 6.h,
-                      //     horizontal: 12.w,
-                      //   ),
-                      //   decoration: BoxDecoration(
-                      //     color: tColor,
-                      //     borderRadius: BorderRadius.circular(20.r),
-                      //   ),
-                      //   child: Text(
-                      //     pDetails.type.toUpperCase(),
-                      //     style: TextStyle(
-                      //       color: Colors.white,
-                      //       fontSize: 14.sp,
-                      //     ),
-                      //   ),
-                      // ),
-                      //   ],
-                      // ),
                       SizedBox(height: 40.h),
 
-                      // Image
                       Image.network(
                         pDetails.imageUrl,
                         width: 276.w,

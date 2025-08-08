@@ -28,13 +28,10 @@ class PokemonCard extends StatelessWidget {
         ),
       ),
       child: Card(
-        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60.r)),
         child: Container(
           width: 306.w,
           height: 214.h,
           decoration: BoxDecoration(
-            //color: Colors.red,
-            //borderRadius: BorderRadius.circular(12.r),
             gradient: RadialGradient(
               center: Alignment.center,
               radius: 0.25,
@@ -45,7 +42,17 @@ class PokemonCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.network(imageUrl, width: 100.w, height: 100.h),
+              Image.network(
+                imageUrl,
+                width: 100.w,
+                height: 100.h,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/images/sad_pikachu.png',
+                    width: 90.w,
+                  );
+                },
+              ),
               SizedBox(height: 14.h),
               Text(
                 pokemonNameFormatter(name),
@@ -56,19 +63,6 @@ class PokemonCard extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              // SizedBox(height: 5.h),
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 3.h),
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(12.r),
-              //     border: Border.all(width: 3.w),
-              //     color: typeColor,
-              //   ),
-              //   child: Text(
-              //     type,
-              //     style: TextStyle(fontSize: 18.sp, color: Colors.white70),
-              //   ),
-              // ),
             ],
           ),
         ),

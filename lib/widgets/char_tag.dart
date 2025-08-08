@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+//de xrisimopoiithike. Itan gia na emfanizoume ta types tou pokemon
+
 class CharTag extends StatelessWidget {
   const CharTag({super.key, required this.label, required this.color});
 
