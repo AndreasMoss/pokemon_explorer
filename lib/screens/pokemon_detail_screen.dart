@@ -10,8 +10,8 @@ import 'package:pokemon_explorer/widgets/stat_item.dart';
 ///
 /// othoni gia failed to fetch details
 
-class PokemonDetail extends StatelessWidget {
-  const PokemonDetail({
+class PokemonDetailScreen extends StatelessWidget {
+  const PokemonDetailScreen({
     super.key,
     required this.pokemonName,
     required this.tColor,

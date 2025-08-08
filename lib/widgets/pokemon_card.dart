@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemon_explorer/functions/general.dart';
-import 'package:pokemon_explorer/screens/pokemon_detail.dart';
+import 'package:pokemon_explorer/screens/pokemon_detail_screen.dart';
 
 class PokemonCard extends StatelessWidget {
   const PokemonCard({
@@ -24,7 +24,7 @@ class PokemonCard extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              PokemonDetail(pokemonName: name, tColor: typeColor),
+              PokemonDetailScreen(pokemonName: name, tColor: typeColor),
         ),
       ),
       child: Card(

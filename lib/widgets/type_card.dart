@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokemon_explorer/models/pokemon_type.dart';
-import 'package:pokemon_explorer/screens/select.dart';
+import 'package:pokemon_explorer/screens/select_screen.dart';
 
 class TypeCard extends StatelessWidget {
   final PokemonType type;

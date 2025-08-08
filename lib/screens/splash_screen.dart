@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pokemon_explorer/screens/search_not_used.dart';
-import 'package:pokemon_explorer/screens/search_v2.dart';
+import 'package:pokemon_explorer/screens/search_v2_screen.dart';
 import 'package:pokemon_explorer/widgets/swipe_ball_indicator.dart';
 
 class Splash extends StatefulWidget {

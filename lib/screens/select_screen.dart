@@ -5,7 +5,7 @@ import 'package:pokemon_explorer/api/poke_api_service.dart';
 import 'package:pokemon_explorer/functions/general.dart';
 import 'package:pokemon_explorer/models/pokemon.dart';
 import 'package:pokemon_explorer/models/pokemon_type.dart';
-import 'package:pokemon_explorer/screens/is_loading.dart';
+import 'package:pokemon_explorer/screens/is_loading_screen.dart';
 import 'package:pokemon_explorer/widgets/pokemon_card.dart';
 
 class Select extends StatefulWidget {
@@ -67,9 +67,16 @@ class _SelectState extends State<Select> {
     }
   }
 
+  bool _isValidHttpUrl(String url) {
+    final uri = Uri.tryParse(url);
+    return uri != null &&
+        (uri.scheme == 'http' || uri.scheme == 'https') &&
+        uri.host.isNotEmpty;
+  }
+
   Future<void> loadNextBatch([int? version]) async {
     final int localVersion = version ?? _queryVersion;
-    if (_isLoadingBatch) return; // guard
+    if (_isLoadingBatch) return;
     _isLoadingBatch = true;
 
     try {
@@ -79,15 +86,19 @@ class _SelectState extends State<Select> {
           .toList();
       if (nextNames.isEmpty) return;
 
-      final basicList = await Future.wait(
+      final fetched = await Future.wait(
         nextNames.map((name) => pokeApi.getPokemonBasic(name)),
       );
 
-      // Αν στο μεταξύ άλλαξε το φίλτρο, αγνόησε αυτά τα αποτελέσματα
       if (localVersion != _queryVersion) return;
 
+      // 👇 Κρατάμε μόνο όσα έχουν σωστή εικόνα
+      final withImages = fetched
+          .where((p) => _isValidHttpUrl(p.imageUrl))
+          .toList();
+
       setState(() {
-        pokemons.addAll(basicList);
+        pokemons.addAll(withImages);
         currentOffset += pageSize;
       });
     } finally {
@@ -108,7 +119,7 @@ class _SelectState extends State<Select> {
         filteredNames = allNames.where((raw) {
           final pretty = pokemonNameFormatter(raw).toLowerCase();
           // διάλεξε ένα:
-          return pretty.startsWith(q); // αρχίζει με το query (strict)
+          return pretty.contains(q); // αρχίζει με το query (strict)
           // return pretty.contains(q);  // ή περιέχει το query (χαλαρό)
         }).toList();
       }
@@ -150,13 +161,21 @@ class _SelectState extends State<Select> {
                   children: [
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                        size: 23.sp,
+                      child: Container(
+                        color: Colors.black,
+                        width: 50.w,
+                        height: 35.h,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                            size: 23.sp,
+                          ),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 22.h),
+                    SizedBox(height: 15.h),
                     Text(
                       'Select your ',
                       style: TextStyle(
@@ -234,7 +253,10 @@ class _SelectState extends State<Select> {
                                     _onSearchChanged('');
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
+                                    padding: const EdgeInsets.only(
+                                      right: 15.0,
+                                      left: 15.0,
+                                    ),
                                     child: Icon(
                                       Icons.close,
                                       color: Colors.white.withAlpha(150),
@@ -251,66 +273,80 @@ class _SelectState extends State<Select> {
 
                     // List
                     Expanded(
-                      child: ListView.builder(
-                        padding: EdgeInsets.only(top: 10.h),
-                        itemCount: totalCount,
-                        itemBuilder: (context, index) {
-                          if (index == rowCount) {
-                            return Padding(
+                      child: filteredNames.isEmpty
+                          ? Center(
+                              child: Text(
+                                'No Pokémon found',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontFamily: 'NexaRegular',
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                            )
+                          : ListView.builder(
                               padding: EdgeInsets.only(top: 10.h),
-                              child: Center(
-                                child: ElevatedButton(
-                                  onPressed: () => loadNextBatch(_queryVersion),
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const CircleBorder(),
-                                    padding: EdgeInsets.all(14.w),
-                                    backgroundColor: widget.selectedType.color,
-                                    elevation: 4,
-                                  ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
+                              itemCount: totalCount,
+                              itemBuilder: (context, index) {
+                                if (index == rowCount) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(top: 10.h),
+                                    child: Center(
+                                      child: ElevatedButton(
+                                        onPressed: () =>
+                                            loadNextBatch(_queryVersion),
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          padding: EdgeInsets.all(14.w),
+                                          backgroundColor:
+                                              widget.selectedType.color,
+                                          elevation: 4,
+                                        ),
+                                        child: const Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                          size: 22,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
 
-                          final firstIndex = index * 2;
-                          final secondIndex = firstIndex + 1;
+                                final firstIndex = index * 2;
+                                final secondIndex = firstIndex + 1;
 
-                          final PokemonBasic first = pokemons[firstIndex];
-                          final PokemonBasic? second =
-                              secondIndex < pokemons.length
-                              ? pokemons[secondIndex]
-                              : null;
+                                final PokemonBasic first = pokemons[firstIndex];
+                                final PokemonBasic? second =
+                                    secondIndex < pokemons.length
+                                    ? pokemons[secondIndex]
+                                    : null;
 
-                          return Row(
-                            children: [
-                              Expanded(
-                                child: PokemonCard(
-                                  name: first.name,
-                                  imageUrl: first.imageUrl,
-                                  type: widget.selectedType.title,
-                                  typeColor: widget.selectedType.color,
-                                ),
-                              ),
-                              SizedBox(width: 10.w),
-                              second != null
-                                  ? Expanded(
+                                return Row(
+                                  children: [
+                                    Expanded(
                                       child: PokemonCard(
-                                        name: second.name,
-                                        imageUrl: second.imageUrl,
+                                        name: first.name,
+                                        imageUrl: first.imageUrl,
                                         type: widget.selectedType.title,
                                         typeColor: widget.selectedType.color,
                                       ),
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          );
-                        },
-                      ),
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    second != null
+                                        ? Expanded(
+                                            child: PokemonCard(
+                                              name: second.name,
+                                              imageUrl: second.imageUrl,
+                                              type: widget.selectedType.title,
+                                              typeColor:
+                                                  widget.selectedType.color,
+                                            ),
+                                          )
+                                        : const SizedBox(),
+                                  ],
+                                );
+                              },
+                            ),
                     ),
                   ],
                 ),
