@@ -1,14 +1,22 @@
-A Pokémon Explorer App using the PokéAPI to fetch data about Pokémon from these 10 types: Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel, and Fairy.
+# Pokémon Explorer App
 
-The app allows users to:
+A **Pokémon Explorer App** using the **PokéAPI** to fetch data about Pokémon from these 10 types: **Fire**, **Water**, **Grass**, **Electric**, **Dragon**, **Psychic**, **Ghost**, **Dark**, **Steel**, and **Fairy**.
 
-Type Selection + Search: Users can choose a Pokémon type from the following options: 
+---
 
-Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel, and Fairy. 
+## Features
 
-Additionally, users can search for Pokémon by name within the selected type.
+### **Type Selection + Search**
+- Users can choose a Pokémon type from the following options: **Fire**, **Water**, **Grass**, **Electric**, **Dragon**, **Psychic**, **Ghost**, **Dark**, **Steel**, and **Fairy**.
+- Search for Pokémon **by name** within the selected type.
 
-Display Pokémon: Display a list of Pokémon that belong to the selected type.
-The initial list should show only the first 10 Pokémon, with an option to load more Pokémon by fetching additional results from the API.
+### **Display Pokémon**
+- Display a list of Pokémon that belong to the selected type.
+- The initial list shows **only the first 10 Pokémon**.
+- Option to **load more** Pokémon by fetching additional results from the API.
 
-Pokémon Details: Provide detailed information for each Pokémon, including its name, image, and it’s basic stats: HP, Attack and Defense.
+### **Pokémon Details**
+- Provide detailed information for each Pokémon, including:
+  - **Name**
+  - **Image**
+  - Basic stats: **HP**, **Attack**, **Defense**
