@@ -20,3 +20,7 @@ A **Pokémon Explorer App** using the **PokéAPI** to fetch data about Pokémon 
   - **Name**
   - **Image**
   - Basic stats: **HP**, **Attack**, **Defense**
+
+## Demo
+
+You can watch the demo video here: [Pokémon Explorer Demo](https://www.youtube.com/watch?v=QVs_pjjs5jY)

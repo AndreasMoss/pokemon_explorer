@@ -20,7 +20,11 @@ class MyApp extends StatelessWidget {
       designSize: const Size(393, 852),
       minTextAdapt: true,
       builder: (context, child) {
-        return MaterialApp(title: 'Pokemon Explorer', home: Splash());
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Pokemon Explorer',
+          home: Splash(),
+        );
       },
     );
   }
